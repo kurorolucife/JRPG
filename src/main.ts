@@ -1,5 +1,5 @@
 import { Game } from "./entities/Game";
-import { getImg, tileMap, tileObjects } from "./helpers";
+import { getImg, tileMap } from "./helpers";
 import { Character } from "./models/Character";
 import { CANVAS, CTX } from "./entities/constants";
 import "./style.css";
