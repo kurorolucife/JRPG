@@ -1,0 +1,9 @@
+canvas {
+  outline: 1px solid black;
+  margin-inline: auto;
+  display: block;
+}
+
+#assets {
+  display: none;
+}

@@ -1,0 +1,59 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "test_map.tmx",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "fileStates": {
+        "AH_A1.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "AH_A2.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "AH_A4.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "AH_A5.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "AH_B.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "test_map.tmx": {
+            "scale": 1,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 396,
+                "y": 127.5
+            }
+        }
+    },
+    "last.exportedFilePath": "/home/helio/Projetos/0_pessoais/js/jrpg/assets/maps",
+    "last.imagePath": "/home/helio/Projetos/0_pessoais/js/jrpg/assets/sprites/tilesets",
+    "map.lastUsedExportFilter": "JSON map files (*.tmj *.json)",
+    "map.lastUsedFormat": "tmx",
+    "openFiles": [
+        "test_map.tmx",
+        "AH_A5.tsx",
+        "AH_B.tsx"
+    ],
+    "project": "jrpg.tiled-project",
+    "recentFiles": [
+        "AH_B.tsx",
+        "AH_A5.tsx",
+        "test_map.tmx",
+        "AH_A4.tsx",
+        "AH_A2.tsx",
+        "AH_A1.tsx"
+    ],
+    "tileset.lastUsedFormat": "tsx"
+}
