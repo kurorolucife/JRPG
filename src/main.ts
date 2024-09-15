@@ -1,19 +1,18 @@
 import { Game } from "./entities/Game";
-import { getImg, tileMap } from "./helpers";
+import { getImg, tileMap, tileObjects } from "./helpers";
+
+import { Tilemap } from "./models/Tilemap";
 import { Character } from "./models/Character";
 import { CANVAS, CTX } from "./entities/constants";
 import "./style.css";
+import { walls } from "./entities/Walls";
 
-const canvas_cols = CANVAS.width / 32;
-// const canvas_rows = canvas.height / 32;
 const spritesheets = {
   people1: getImg("people-1"),
   people2: getImg("people-2"),
   tile: getImg("AH_A5"),
   objects: getImg("AH_B"),
 };
-
-const tilemap_cols = spritesheets.tile.width / 32;
 
 const char = new Character({
   name: "John",
@@ -25,6 +24,18 @@ const char = new Character({
   sprite_rows: [0, 3],
 });
 
+const babckgroundMap = new Tilemap({
+  coordinates: tileMap,
+  spritesheet: spritesheets.tile,
+  firstGid: 1,
+});
+
+const objectsMap = new Tilemap({
+  coordinates: tileObjects,
+  spritesheet: spritesheets.objects,
+  firstGid: 129,
+});
+
 function update() {
   Game.properties.frame++;
   char.update();
@@ -33,43 +44,21 @@ function update() {
 function render() {
   CTX.clearRect(0, 0, CANVAS.width, CANVAS.height);
 
-  tileMap.forEach((cell, index) => {
-    /** Code that shows which tile shoul I draw */
-    let tile_row = 1;
-    let tile_col = 1;
-    if (cell == 0) return;
+  babckgroundMap.draw();
 
-    if (cell >= tilemap_cols) {
-      tile_row = Math.ceil(cell / tilemap_cols);
-      // Why it works?? \/
-      tile_col = cell % tilemap_cols != 0 ? cell % tilemap_cols : tilemap_cols;
-      //
-    }
-    // To array indexes
-    tile_row--;
-    tile_col--;
+  objectsMap.draw();
 
-    /** ----------------------------------- */
+  if (Game.debug.collision) {
+    walls.objects.forEach((wall) => {
+      // WHY + 32???
+      CTX.fillStyle = "rgba(255,0,0,0.4)";
+      CTX.fillRect(wall.x + 32, wall.y, wall.width, wall.height);
+      CTX.fillStyle = "rgba(0,0,0,0.8)";
+      CTX.font = "bold 20px sans-serif";
 
-    // Code that shows where should i draw the tile
-    const easy_idx = index + 1;
-    let which_col = easy_idx % canvas_cols;
-    let which_row = Math.ceil(easy_idx / canvas_cols);
-
-    // which_col--;
-    which_row--;
-    CTX.drawImage(
-      spritesheets.tile,
-      32 * tile_col,
-      32 * tile_row,
-      32,
-      32,
-      32 * which_col,
-      32 * which_row,
-      32,
-      32
-    );
-  });
+      // CTX.fillText(`x:${wall.x + 32}, y: ${wall.y}`, wall.x + 32, wall.y + 10);
+    });
+  }
 
   char.draw();
 }
@@ -81,8 +70,6 @@ function gameLoop() {
 
   requestAnimationFrame(gameLoop);
 }
-
-gameLoop();
 
 window.addEventListener("keydown", ({ key }) => {
   if (key == "ArrowUp") {
@@ -113,3 +100,8 @@ window.addEventListener("keyup", ({ key }) => {
     Game.controls.left = false;
   }
 });
+
+// Start
+window.onload = () => {
+  gameLoop();
+};

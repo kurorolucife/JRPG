@@ -1,4 +1,5 @@
 import { Game } from "../entities/Game";
+import { walls } from "../entities/Walls";
 import { CTX } from "../entities/constants";
 type CharacterConstructorProperties = {
   name: string;
@@ -74,21 +75,54 @@ class Character {
   }
 
   handleControls() {
+    const collider = this.getCollider();
     if (Game.controls.up) {
       this.setDirection("up");
-      this.y -= 1.5;
+      const willCollide = walls.isColliding(
+        collider.x,
+        collider.y - 1.5,
+        collider.width,
+        collider.height
+      );
+      if (!willCollide) {
+        this.y -= 1.5;
+      }
     }
     if (Game.controls.right) {
       this.setDirection("right");
-      this.x += 1.5;
+      const willCollide = walls.isColliding(
+        collider.x + 1.5,
+        collider.y,
+        collider.width,
+        collider.height
+      );
+      if (!willCollide) {
+        this.x += 1.5;
+      }
     }
     if (Game.controls.down) {
       this.setDirection("down");
-      this.y += 1.5;
+      const willCollide = walls.isColliding(
+        collider.x,
+        collider.y + 1.5,
+        collider.width,
+        collider.height
+      );
+      if (!willCollide) {
+        this.y += 1.5;
+      }
     }
     if (Game.controls.left) {
       this.setDirection("left");
-      this.x -= 1.5;
+      const willCollide = walls.isColliding(
+        collider.x - 1.5,
+        collider.y,
+        collider.width,
+        collider.height
+      );
+      if (!willCollide) {
+        this.x -= 1.5;
+      }
     }
   }
 
@@ -118,6 +152,15 @@ class Character {
     );
   }
 
+  getCollider() {
+    return {
+      x: this.x + this.size * 0.2,
+      y: this.y + this.size * 0.2,
+      width: this.size * 0.8,
+      height: this.size * 0.8,
+    };
+  }
+
   draw() {
     CTX.drawImage(
       this.spritesheet,
@@ -130,6 +173,12 @@ class Character {
       this.size,
       this.size
     );
+
+    if (Game.debug.collision) {
+      const collider = this.getCollider();
+      CTX.fillStyle = "rgba(255,0,0,0.4)";
+      CTX.fillRect(collider.x, collider.y, collider.width, collider.height);
+    }
   }
 }
 
